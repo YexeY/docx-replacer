@@ -1,27 +1,22 @@
 package org.yexey.wordreplacer.strategy.visitor.impl;
 
 import org.apache.poi.xwpf.usermodel.*;
-import org.yexey.wordreplacer.strategy.visitor.DocumentElementVisitor;
-import org.yexey.wordreplacer.strategy.replacement.ReplacementStrategy;
 import org.yexey.wordreplacer.strategy.tracker.ReplacementTracker;
+import org.yexey.wordreplacer.strategy.visitor.DocumentElementVisitor;
 
 import java.util.List;
 
 /**
  * Visitor for replacing bookmarks
  */
-
 public class ReplacementVisitor implements DocumentElementVisitor {
     private final String bookmark;
     private final String replacement;
-    private final ReplacementStrategy strategy;
     private final ReplacementTracker tracker;
 
-    public ReplacementVisitor(String bookmark, String replacement,
-                              ReplacementStrategy strategy, ReplacementTracker tracker) {
+    public ReplacementVisitor(String bookmark, String replacement, ReplacementTracker tracker) {
         this.bookmark = bookmark;
         this.replacement = replacement;
-        this.strategy = strategy;
         this.tracker = tracker;
     }
 

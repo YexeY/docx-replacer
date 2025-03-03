@@ -1,4 +1,4 @@
-package org.yexey.wordreplacer.core;
+package org.yexey.wordreplacer;
 
 import java.util.Map;
 

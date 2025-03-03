@@ -1,8 +1,8 @@
-package org.yexey.wordreplacer.core;
+package org.yexey.wordreplacer;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xwpf.usermodel.*;
-import org.yexey.wordreplacer.strategy.replacement.ReplacementStrategy;
 import org.yexey.wordreplacer.strategy.tracker.ReplacementTracker;
 import org.yexey.wordreplacer.strategy.tracker.impl.SimpleReplacementTracker;
 import org.yexey.wordreplacer.strategy.visitor.DocumentElementVisitor;
@@ -23,23 +23,12 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 public class WordReplacer implements DocumentReplacer {
 
     private final XWPFDocument document;
-    private final ReplacerConfig config;
+    @Getter
     private final ReplacementTracker tracker;
 
-    /**
-     * Main constructor with default configuration
-     */
     public WordReplacer(XWPFDocument document) {
-        this(document, new ReplacerConfig(), new SimpleReplacementTracker());
-    }
-
-    /**
-     * Constructor with custom configuration
-     */
-    public WordReplacer(XWPFDocument document, ReplacerConfig config, ReplacementTracker tracker) {
         this.document = document;
-        this.config = config;
-        this.tracker = tracker;
+        this.tracker = new SimpleReplacementTracker();
     }
 
     @Override
@@ -48,7 +37,6 @@ public class WordReplacer implements DocumentReplacer {
         ReplacementVisitor visitor = new ReplacementVisitor(
                 bookmark,
                 replacement,
-                config.getStrategy(),
                 tracker);
 
         // Process document elements
@@ -72,7 +60,7 @@ public class WordReplacer implements DocumentReplacer {
 
     public void removeParagraph(String bookmark) {
         if (!isBlank(bookmark)) {
-            removeElementsContaining(bookmark);
+            removeParagraphContaining(bookmark);
         }
     }
 
@@ -81,7 +69,7 @@ public class WordReplacer implements DocumentReplacer {
      */
     public void replaceOrRemoveParagraph(String bookmark, String replacement) {
         if (isBlank(replacement)) {
-            removeElementsContaining(bookmark);
+            removeParagraphContaining(bookmark);
         } else {
             replace(bookmark, replacement);
         }
@@ -97,19 +85,12 @@ public class WordReplacer implements DocumentReplacer {
     /**
      * Remove document elements containing the bookmark
      */
-    public void removeElementsContaining(String bookmark) {
+    public void removeParagraphContaining(String bookmark) {
         // Create a removal visitor
         RemovalVisitor visitor = new RemovalVisitor(document, bookmark);
 
         // Process document elements
         processDocument(visitor);
-    }
-
-    /**
-     * Get statistics about replacements
-     */
-    public ReplacementTracker getTracker() {
-        return tracker;
     }
 
     /**
@@ -136,54 +117,13 @@ public class WordReplacer implements DocumentReplacer {
         }
 
         // Process headers if configured
-        if (config.isProcessHeaders()) {
-            for (XWPFHeader header : document.getHeaderList()) {
-                visitor.visitHeader(header);
-            }
+        for (XWPFHeader header : document.getHeaderList()) {
+            visitor.visitHeader(header);
         }
 
         // Process footers if configured
-        if (config.isProcessFooters()) {
-            for (XWPFFooter footer : document.getFooterList()) {
-                visitor.visitFooter(footer);
-            }
-        }
-    }
-
-    /**
-     * Builder class for fluent creation of WordReplacer
-     */
-    public static class Builder {
-        private final XWPFDocument document;
-        private final ReplacerConfig config = new ReplacerConfig();
-        private ReplacementTracker tracker = new SimpleReplacementTracker();
-
-        public Builder(XWPFDocument document) {
-            this.document = document;
-        }
-
-        public Builder withStrategy(ReplacementStrategy strategy) {
-            config.setStrategy(strategy);
-            return this;
-        }
-
-        public Builder processHeaders(boolean process) {
-            config.setProcessHeaders(process);
-            return this;
-        }
-
-        public Builder processFooters(boolean process) {
-            config.setProcessFooters(process);
-            return this;
-        }
-
-        public Builder withTracker(ReplacementTracker tracker) {
-            this.tracker = tracker;
-            return this;
-        }
-
-        public WordReplacer build() {
-            return new WordReplacer(document, config, tracker);
+        for (XWPFFooter footer : document.getFooterList()) {
+            visitor.visitFooter(footer);
         }
     }
 }

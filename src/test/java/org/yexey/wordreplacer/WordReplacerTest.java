@@ -1,24 +1,26 @@
-package org.yexey;
+package org.yexey.wordreplacer;
 
+
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.yexey.wordreplacer.core.WordReplacer;
+import org.junit.jupiter.api.Test;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Main {
-    public static void main(String[] args) throws Exception {
+@Slf4j
+class WordReplacerTest {
+
+    @Test
+    public void test() throws Exception {
         // Load document
         try (FileInputStream fis = new FileInputStream("template.docx")) {
             XWPFDocument document = new XWPFDocument(fis);
 
             // Create replacer with builder pattern for configuration
-            WordReplacer replacer = new WordReplacer.Builder(document)
-                    .processHeaders(true)
-                    .processFooters(true)
-                    .build();
+            WordReplacer replacer = new WordReplacer(document);
 
             // Simple replacement
             replacer.replace("{{NAME}}", "John Doe");
@@ -37,9 +39,9 @@ public class Main {
             replacer.removeParagraph("{{NOTES}}");
 
             // Get statistics
-            System.out.println("Successful replacements: " +
+            log.info("Successful replacements: " +
                     replacer.getTracker().getReplacementCounts());
-            System.out.println("Failed replacements: " +
+            log.info("Failed replacements: " +
                     replacer.getTracker().getFailedReplacements());
 
             // Save document
