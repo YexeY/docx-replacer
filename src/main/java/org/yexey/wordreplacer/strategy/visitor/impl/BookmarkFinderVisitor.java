@@ -1,5 +1,6 @@
 package org.yexey.wordreplacer.strategy.visitor.impl;
 
+import lombok.Getter;
 import org.apache.poi.xwpf.usermodel.*;
 import org.yexey.wordreplacer.strategy.visitor.DocumentElementVisitor;
 
@@ -11,14 +12,11 @@ import static org.yexey.wordreplacer.utils.BookmarkUtils.containsBookmark;
  */
 public class BookmarkFinderVisitor implements DocumentElementVisitor {
     private final String bookmark;
+    @Getter
     private boolean found = false;
 
     public BookmarkFinderVisitor(String bookmark) {
         this.bookmark = bookmark;
-    }
-
-    public boolean isFound() {
-        return found;
     }
 
     @Override
