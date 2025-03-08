@@ -1,10 +1,10 @@
-package org.yexey.wordreplacer.strategy.visitor.impl;
+package org.yexey.wordreplacer.internal.strategy.visitor.impl;
 
 import lombok.Getter;
 import org.apache.poi.xwpf.usermodel.*;
-import org.yexey.wordreplacer.strategy.visitor.DocumentElementVisitor;
+import org.yexey.wordreplacer.internal.strategy.visitor.DocumentElementVisitor;
 
-import static org.yexey.wordreplacer.utils.BookmarkUtils.containsBookmark;
+import static org.yexey.wordreplacer.internal.utils.BookmarkUtils.containsBookmark;
 
 
 /**

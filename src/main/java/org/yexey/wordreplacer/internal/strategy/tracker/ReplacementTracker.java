@@ -1,4 +1,4 @@
-package org.yexey.wordreplacer.strategy.tracker;
+package org.yexey.wordreplacer.internal.strategy.tracker;
 
 import java.util.List;
 import java.util.Map;

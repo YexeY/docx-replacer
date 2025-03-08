@@ -3,24 +3,23 @@ package org.yexey.wordreplacer;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xwpf.usermodel.*;
-import org.yexey.wordreplacer.strategy.tracker.ReplacementTracker;
-import org.yexey.wordreplacer.strategy.tracker.impl.SimpleReplacementTracker;
-import org.yexey.wordreplacer.strategy.visitor.DocumentElementVisitor;
-import org.yexey.wordreplacer.strategy.visitor.impl.BookmarkFinderVisitor;
-import org.yexey.wordreplacer.strategy.visitor.impl.RemovalVisitor;
-import org.yexey.wordreplacer.strategy.visitor.impl.ReplacementVisitor;
+import org.yexey.wordreplacer.internal.strategy.tracker.ReplacementTracker;
+import org.yexey.wordreplacer.internal.strategy.tracker.impl.SimpleReplacementTracker;
+import org.yexey.wordreplacer.internal.strategy.visitor.DocumentElementVisitor;
+import org.yexey.wordreplacer.internal.strategy.visitor.impl.BookmarkFinderVisitor;
+import org.yexey.wordreplacer.internal.strategy.visitor.impl.RemovalVisitor;
+import org.yexey.wordreplacer.internal.strategy.visitor.impl.ReplacementVisitor;
 
 import java.util.Map;
 import java.util.Optional;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
-
 /**
  * Main implementation of the document replacer
  */
 @Slf4j
-public class WordReplacer implements DocumentReplacer {
+public class WordReplacer implements WordReplacerIF {
 
     private final XWPFDocument document;
     @Getter
@@ -54,38 +53,27 @@ public class WordReplacer implements DocumentReplacer {
     /**
      * Replace with default text if replacement is empty
      */
+    @Override
     public void replaceOrDefault(String bookmark, String replacement, String defaultText) {
         replace(bookmark, (replacement == null || replacement.isEmpty()) ? defaultText : replacement);
-    }
-
-    public void removeParagraph(String bookmark) {
-        if (!isBlank(bookmark)) {
-            removeParagraphContaining(bookmark);
-        }
-    }
-
-    /**
-     * Replace or remove paragraph if replacement is empty
-     */
-    public void replaceOrRemoveParagraph(String bookmark, String replacement) {
-        if (isBlank(replacement)) {
-            removeParagraphContaining(bookmark);
-        } else {
-            replace(bookmark, replacement);
-        }
     }
 
     /**
      * Process optional replacement
      */
+    @Override
     public void replace(String bookmark, Optional<String> replacement) {
         replace(bookmark, replacement.orElse(""));
     }
 
     /**
-     * Remove document elements containing the bookmark
+     * Remove document paragraphs containing the bookmark
      */
-    public void removeParagraphContaining(String bookmark) {
+    @Override
+    public void removeParagraph(String bookmark) {
+        if (isBlank(bookmark)) {
+            return;
+        }
         // Create a removal visitor
         RemovalVisitor visitor = new RemovalVisitor(document, bookmark);
 
@@ -96,6 +84,7 @@ public class WordReplacer implements DocumentReplacer {
     /**
      * Check if a bookmark exists in the document
      */
+    @Override
     public boolean hasBookmark(String bookmark) {
         BookmarkFinderVisitor finder = new BookmarkFinderVisitor(bookmark);
         processDocument(finder);

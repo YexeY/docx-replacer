@@ -1,6 +1,6 @@
-package org.yexey.wordreplacer.strategy.tracker.impl;
+package org.yexey.wordreplacer.internal.strategy.tracker.impl;
 
-import org.yexey.wordreplacer.strategy.tracker.ReplacementTracker;
+import org.yexey.wordreplacer.internal.strategy.tracker.ReplacementTracker;
 
 import java.util.HashMap;
 import java.util.List;

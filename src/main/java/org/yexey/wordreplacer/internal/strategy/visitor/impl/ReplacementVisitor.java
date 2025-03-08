@@ -1,8 +1,8 @@
-package org.yexey.wordreplacer.strategy.visitor.impl;
+package org.yexey.wordreplacer.internal.strategy.visitor.impl;
 
 import org.apache.poi.xwpf.usermodel.*;
-import org.yexey.wordreplacer.strategy.tracker.ReplacementTracker;
-import org.yexey.wordreplacer.strategy.visitor.DocumentElementVisitor;
+import org.yexey.wordreplacer.internal.strategy.tracker.ReplacementTracker;
+import org.yexey.wordreplacer.internal.strategy.visitor.DocumentElementVisitor;
 
 import java.util.List;
 
