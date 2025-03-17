@@ -1,4 +1,4 @@
-package org.yexey.wordreplacer.internal.strategy.visitor;
+package io.github.yexey.wordreplacer.internal.strategy.visitor;
 
 import org.apache.poi.xwpf.usermodel.*;
 

@@ -1,4 +1,4 @@
-package org.yexey.wordreplacer;
+package io.github.yexey.wordreplacer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xwpf.usermodel.*;

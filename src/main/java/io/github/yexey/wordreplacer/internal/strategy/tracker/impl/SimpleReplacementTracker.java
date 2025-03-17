@@ -1,10 +1,11 @@
-package org.yexey.wordreplacer.internal.strategy.tracker.impl;
+package io.github.yexey.wordreplacer.internal.strategy.tracker.impl;
 
-import org.yexey.wordreplacer.internal.strategy.tracker.ReplacementTracker;
+import io.github.yexey.wordreplacer.internal.strategy.tracker.ReplacementTracker;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Class for tracking replacement statistics
@@ -27,6 +28,6 @@ public class SimpleReplacementTracker implements ReplacementTracker {
         return replacementCounts.entrySet().stream()
                 .filter(elm -> elm.getValue() == 0)
                 .map(Map.Entry::getKey)
-                .toList();
+                .collect(Collectors.toList());
     }
 }

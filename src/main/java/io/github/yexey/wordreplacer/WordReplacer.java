@@ -1,19 +1,18 @@
-package org.yexey.wordreplacer;
+package io.github.yexey.wordreplacer;
 
+import io.github.yexey.wordreplacer.internal.strategy.tracker.ReplacementTracker;
+import io.github.yexey.wordreplacer.internal.strategy.tracker.impl.SimpleReplacementTracker;
+import io.github.yexey.wordreplacer.internal.strategy.visitor.DocumentElementVisitor;
+import io.github.yexey.wordreplacer.internal.strategy.visitor.impl.BookmarkFinderVisitor;
+import io.github.yexey.wordreplacer.internal.strategy.visitor.impl.RemovalVisitor;
+import io.github.yexey.wordreplacer.internal.strategy.visitor.impl.ReplacementVisitor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xwpf.usermodel.*;
-import org.yexey.wordreplacer.internal.strategy.tracker.ReplacementTracker;
-import org.yexey.wordreplacer.internal.strategy.tracker.impl.SimpleReplacementTracker;
-import org.yexey.wordreplacer.internal.strategy.visitor.DocumentElementVisitor;
-import org.yexey.wordreplacer.internal.strategy.visitor.impl.BookmarkFinderVisitor;
-import org.yexey.wordreplacer.internal.strategy.visitor.impl.RemovalVisitor;
-import org.yexey.wordreplacer.internal.strategy.visitor.impl.ReplacementVisitor;
 
 import java.util.Map;
 import java.util.Optional;
-
-import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
  * Main implementation of the document replacer
@@ -71,7 +70,7 @@ public class WordReplacer implements WordReplacerIF {
      */
     @Override
     public void removeParagraph(String bookmark) {
-        if (isBlank(bookmark)) {
+        if (StringUtils.isBlank(bookmark)) {
             return;
         }
         // Create a removal visitor

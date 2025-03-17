@@ -1,4 +1,4 @@
-package org.yexey.wordreplacer.internal.utils;
+package io.github.yexey.wordreplacer.internal.utils;
 
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
