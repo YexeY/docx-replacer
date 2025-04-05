@@ -158,9 +158,6 @@ This gives you complete flexibility in how you design your templates.
 ## Requirements
 
 - Java 8 or higher
-- Apache POI 5.0.0 or higher
-- Apache Commons Lang 3.0 or higher
-- Lombok (for development)
 
 ## Building from Source
 
