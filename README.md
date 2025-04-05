@@ -16,12 +16,15 @@ WordReplacer is a utility that helps you automate Microsoft Word document workfl
 - Remove entire paragraphs containing specified placeholders
 - Track successful and failed replacements
 - Works with all parts of Word documents including tables, headers, and footers
+- Retain original foramtting
+- It just works, where other libraries fail to robustly replace the placeholders
 
 ## Installation
 
 ### Maven
 
 ```xml
+<!-- https://central.sonatype.com/artifact/io.github.yexey/word-replacer -->
 <dependency>
     <groupId>io.github.yexey</groupId>
     <artifactId>word-replacer</artifactId>
