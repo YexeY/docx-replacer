@@ -24,7 +24,7 @@ WordReplacer is a utility that helps you automate Microsoft Word document workfl
 ### Maven
 
 ```xml
-<!-- https://central.sonatype.com/artifact/io.github.yexey/word-replacer -->
+<!-- https://central.sonatype.com/artifact/io.github.yexey/docx-replacer -->
 <dependency>
     <groupId>io.github.yexey</groupId>
     <artifactId>word-replacer</artifactId>
