@@ -34,7 +34,7 @@ import java.util.Optional;
  *     WordReplacer replacer = new WordReplacer(document);
  *     replacer.replace("{{NAME}}", "John Doe");
  *
- *     Map<String, String> replacements = new HashMap<>();
+ *     Map&lt;String, String&gt; replacements = new HashMap&lt;&gt;();
  *     replacements.put("{{EMAIL}}", "john.doe@example.com");
  *     replacements.put("{{PHONE}}", "(555) 123-4567");
  *     replacer.replace(replacements);
